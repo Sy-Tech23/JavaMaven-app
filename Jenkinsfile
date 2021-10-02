@@ -44,7 +44,6 @@ pipeline {
                     }
                 }
             }
-        }
         stage("deploy") {
             when{
                 expression{
@@ -54,6 +53,7 @@ pipeline {
             steps {
                 script {
                     gv.deployApp()
+                    }
                 }
             }
         }
