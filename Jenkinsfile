@@ -1,4 +1,5 @@
-// def gv
+#!/user/bin/env groovy
+def gv
 
 pipeline {
     agent any
@@ -6,17 +7,17 @@ pipeline {
         maven 'Maven'
     }
     stages {
-        // stage("init") {
-        //     steps {
-        //         script {
-        //             gv = load "script.groovy"
-        //         }
-        //     }
-        // }
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
          stage("test") {
             steps {
                 script {
-                    echo "testing the application..."
+                     echo "testing the application..."
                 }
             }
         }
@@ -28,8 +29,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "building the application..."
-                    sh 'mvn package'
+                     gv.buildJar()
                 }
             }
         }
@@ -41,11 +41,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "building the docker image..."
-                    withCredentials([usernamePassword(credentialsId:'docker-hub-repo',passwordVariable:'PASS',usernameVariable:'USER')]){
-                        sh 'docker build -t simongport/my-repo:jma-2.0 .'
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push simongport/my-repo:jma-2.0'
+                   gv.buildImage()
                     }
                 }
             }
@@ -58,8 +54,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying the application..."
-                    //gv.deployApp()
+                    gv.deployApp()
                 }
             }
         }
