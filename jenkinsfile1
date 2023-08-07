@@ -54,4 +54,9 @@ pipeline {
                 
             }
         }
+<<<<<<< HEAD
     }
+=======
+    }
+}
+>>>>>>> 023bc7ccbf6af1f99030cb466e912f7fd26df0c0
