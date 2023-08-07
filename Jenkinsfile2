@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                      echo 'Building the ap[]'
-                     sh 'maven package'
+                     sh 'mvn package'
                 
             }
         }
