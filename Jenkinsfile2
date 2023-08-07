@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                      echo 'Building docker image'
-                     withCredentials([usernamePassword(withCredentialsId: 'DockerHub', passwordVariable: 'PASS', usernameVariable 'USER' )])
+                     withCredentials([usernamePassword(CredentialsId: 'DockerHub', passwordVariable: 'PASS', usernameVariable 'USER' )])
                      sh 'docker build -t shersi32/demo-app:jma-2.0 .'
                      sh " echo $PASS | docker login -u $USER  --password-stdin "
                      sh 'docker push shersi32/demo-app:jma-2.0 '
