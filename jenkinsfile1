@@ -1,16 +1,30 @@
-
+def gv 
 pipeline {
     agent any
     parameters {
+<<<<<<< Updated upstream
         choice(name: "VERSION", choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+=======
+        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+>>>>>>> Stashed changes
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     
 
     stages {
+        stage ("init") {
+          steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage('Build') {
             steps {
-                echo 'Building..'
+                script {
+                    gv.buildApp()                    
+                }
+                
             }
         }
         stage('Test') {
@@ -19,14 +33,18 @@ pipeline {
                     params.executeTests
                 }
             }
-            steps {
-                echo 'Testing..'
+            script {
+                    gv.testApp()                    
+                }
+                
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
-                echo "deploying version $params.VERSION"
+                script {
+                    gv.deployApp()                    
+                }
+                
             }
         }
     }
