@@ -49,7 +49,11 @@ pipeline {
             steps {
                 script {
                     gv.deployApp()  
+<<<<<<< Updated upstream
                     echo "Deploying to ${ENV}"                  
+=======
+                    echo "Deploying to ${ENV}"     
+>>>>>>> Stashed changes
                 }
                 
             }
