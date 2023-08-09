@@ -20,10 +20,17 @@ pipeline {
             steps {
                 script {
                      echo 'Building docker image'
+<<<<<<< HEAD
                      withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER' )])
                      sh 'docker build -t shersi32/my-repo:jma-2.0 .'
                      sh "echo $PASS | docker login -u $USER  --password-stdin"
                      sh 'docker push shersi32/my-repo:jma-2.0'
+=======
+                     withCredentials([usernamePassword(CredentialsId: 'DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER' )])
+                     sh 'docker build -t shersi32/my-repo:jma-2.0 .'
+                     sh " echo $PASS | docker login -u $USER  --password-stdin "
+                     sh 'docker push shersi32/my-repo:jma-2.0 '
+>>>>>>> 6f2efd3641b96c338679513f0e3f578d52ec3d98
             }
         }
     }
