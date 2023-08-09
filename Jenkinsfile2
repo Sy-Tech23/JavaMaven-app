@@ -24,10 +24,12 @@ pipeline {
                      sh 'docker build -t shersi32/my-repo:jma-2.0 .'
                      sh "echo $PASS | docker login -u $USER  --password-stdin"
                      sh 'docker push shersi32/my-repo:jma-2.0'
+                
             }
         }
     }
-}
+
+
     
 
         stage('Deploy') {
@@ -37,4 +39,6 @@ pipeline {
             }
         }
     }
+    }
 }
+  
