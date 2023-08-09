@@ -17,6 +17,7 @@ pipeline {
             steps {
                 script {
                      echo "testing the application..."
+                     echo "executing test for branch $BRANCH_NAME"
                 }
             }
         }
