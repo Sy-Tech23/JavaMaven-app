@@ -37,6 +37,7 @@ pipeline {
             }
         }
         stage("build image") {
+        
             when{
                 expression{
                 BRANCH_NAME=='main'
@@ -44,7 +45,7 @@ pipeline {
             }
             steps {
                 script {
-                  buildImage()
+                  buildImage 'shersi32/my-repo:jma-3.0'
                     }
                 }
             }
