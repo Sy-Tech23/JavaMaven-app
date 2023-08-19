@@ -1,6 +1,11 @@
 #!/user/bin/env groovy
 
-@Library ('jenkins-shared-library')
+Library identifier:'jenkins-shared-library@main', retriever: modernSCM(
+    [$class: 'GitSCMSource',
+     remote: 'https://github.com/Sy-Tech23/jenkins-shared-library',
+     credentialsId: "sy-tech23"
+    ]
+)
 def gv
 
 pipeline {
@@ -8,36 +13,30 @@ pipeline {
     tools {
         maven 'maven'
     }
+    environment {
+        IMAGE_NAME = 'shersi32/myAPP:1'
+    }
+
+
+
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
-         stage("test") {
-            steps {
-                script {
-                     echo "testing the application..."
-                     echo "executing test for branch $BRANCH_NAME"
-                }
-            }
-        }
-        stage("build jar") {
+
+        stage("build app") {
            
             steps {
                 script {
+                    echo 'Building application jar..'
                     buildJar()
                 }
             }
         }
         stage("build image") {
-        
-           
             steps {
                 script {
-                  buildImage 'shersi32/my-repo:jma-3.0'
+                    echo 'Building docker image'
+                  buildImage(env.IMAGE_NAME)
+                  dockerLogin()
+                  dockerPush(env.IMAGE_NAME)
                     }
                 }
             }
@@ -45,7 +44,10 @@ pipeline {
             
             steps {
                 script {
-                    gv.deployApp()
+                    echo 'Deploying docker image to EC2'
+                    def dockerCmd = "docker run -p 8080:8080 -d ${IMAGE_NAME}"
+                sshagent(['ec2-server']) {
+                  sh "ssh -o StrictHostKeyChecking=no ec2-user@54.162.188.92 ${dockerCmd}"
                     }
                 }
             }
