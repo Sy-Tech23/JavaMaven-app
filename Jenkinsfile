@@ -6,7 +6,7 @@ Library identifier:'jenkins-shared-library@main', retriever: modernSCM(
      credentialsId: "sy-tech23"
     ]
 )
-def gv
+
 
 pipeline {
     agent any
