@@ -14,7 +14,7 @@ pipeline {
         maven 'maven'
     }
     environment {
-        IMAGE_NAME = 'shersi32/myAPP:1'
+        IMAGE_NAME = 'shersi32/myapp:1'
     }
 
 
