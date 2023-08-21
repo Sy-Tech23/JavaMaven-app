@@ -29,7 +29,7 @@ pipeline {
                 script {
                     echo 'Deploying docker image to EC2'
                     def dockerCmd = "docker run -p 8080:8080 -d shersi32/myapp:1 "
-                sshagent(['ec2-server']) {
+                sshagent(['ec2-user']) {
                   sh "ssh -o StrictHostKeyChecking=no ec2-user@54.175.82.44 ${dockerCmd}"
                     }
                 }
