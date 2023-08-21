@@ -1,47 +1,28 @@
 #!/user/bin/env groovy
 
-library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
-    [$class: 'GitSCMSource',
-     remote: 'https://github.com/Sy-Tech23/jenkins-shared-library',
-     credentialsId: "sy-tech23"
-    ]
-)
-
-
-def gv
-
 pipeline {
     agent any
     tools {
         maven 'maven'
     }
-    environment {
-        IMAGE_NAME = 'shersi32/myapp:1'
-    }
-
-
-
     stages {
-
-        stage("build app") {
-           
+         stage("test") {
             steps {
                 script {
-                    echo 'Building application jar..'
-                    buildJar()
+                     echo "testing the application..."
+                     echo "executing test for branch $BRANCH_NAME"
                 }
             }
         }
-        stage("build image") {
+        stage("build ") {
+           
             steps {
                 script {
-                    echo 'Building docker image'
-                  buildImage(env.IMAGE_NAME)
-                  dockerLogin()
-                  dockerPush(env.IMAGE_NAME)
-                    }
+                  echo "building the application."
                 }
             }
+        }
+    
         stage("deploy") {
             
             steps {
@@ -55,4 +36,4 @@ pipeline {
             }
         }
     }   
-}
+
